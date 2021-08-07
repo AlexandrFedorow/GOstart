@@ -3,26 +3,42 @@ package main
 import "fmt"
 
 
-func Draw(point []string){
-	var pole string
+func Draw(point []string, part []string){
+	var pole1 string
+	var pole2 string
+
 	var n int16
 	n = -1
 	for i:=0; i<9; i++{
 		n += 1
 		if (i % 3 == 0) && (i!=0){
-			pole += "|\n"
+			pole1 += "|\n"
 		}
-			pole += "|" + point[n]	
+			pole1 += "|" + point[n]
 	}
 
-	pole += "|"
-	fmt.Println(pole)
+	n = -1
+
+	for i:=0; i<9; i++{
+		n += 1
+		if (i % 3 == 0) && (i!=0){
+			pole2 += "|\n"
+		}
+			pole2 += "|" + part[n]
+	}
+
+	pole1 += "|"
+	pole2 += "|"
+
+	fmt.Println(pole1)
+	fmt.Println("\n")
+	fmt.Println(pole2)
 }
 
 func main(){
-	points := []string{"1","2","3","4","5","6","7","8","9"}
-	
-	Draw(points)
+	points := []string{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+	parts := []string{"-", "-", "-", "-", "-", "-", "-", "-", "-"}
+	Draw(points, parts)
 
 	var action int16
 	turn := 1
@@ -30,15 +46,21 @@ func main(){
 	for i:=0; i<9; i++{
 		fmt.Scanln(&action)
 
-		if turn % 2 != 0{
-			points[action-1] = "X"
-			turn++
-		}else{
-			points[action-1] = "O"
-			turn++
+		if action == 0{
+			break
 		}
-		Draw(points)
+
+		if (action > 0) && (action < 10){
+			if turn % 2 != 0{
+				parts[action-1] = "X"
+				turn++
+			}else{
+				parts[action-1] = "O"
+				turn++
+			}
+		}else{
+			fmt.Println("huita")
+		}
+		Draw(points, parts)
 	}
 }
-
-
